@@ -1,0 +1,290 @@
+{
+  "test_cases": [
+    {
+      "id": "test_01_basic_pdf_analysis",
+      "prompt": "Analyse ce document PDF scientifique et donne-moi un résumé exécutif avec les résultats principaux",
+      "description": "Test basique d'analyse d'un PDF scientifique",
+      "expected_outputs": [
+        "Résumé exécutif structuré (150-250 mots)",
+        "Section 'Résultats Majeurs' avec données quantitatives",
+        "Section 'Conclusions Principales'",
+        "Mindmap Mermaid conceptuelle"
+      ],
+      "assertions": [
+        {
+          "type": "contains",
+          "value": "## 📋 Résumé Exécutif",
+          "description": "Le rapport doit contenir une section résumé exécutif"
+        },
+        {
+          "type": "contains",
+          "value": "## 🔬 Résultats Majeurs",
+          "description": "Le rapport doit contenir une section résultats majeurs"
+        },
+        {
+          "type": "contains",
+          "value": "```mermaid\nmindmap",
+          "description": "Le rapport doit contenir une mindmap Mermaid"
+        },
+        {
+          "type": "file_exists",
+          "value": "analyse_document.md",
+          "description": "Le fichier d'analyse doit être créé"
+        }
+      ]
+    },
+    {
+      "id": "test_02_figure_extraction",
+      "prompt": "Extrais les figures importantes de cet article avec les résultats quantitatifs",
+      "description": "Test d'extraction de figures clés",
+      "expected_outputs": [
+        "Dossier ./figures/ créé",
+        "Images PNG des figures principales (> 300x200 px)",
+        "Section du rapport avec légendes et interprétations"
+      ],
+      "assertions": [
+        {
+          "type": "directory_exists",
+          "value": "figures",
+          "description": "Le dossier figures doit être créé"
+        },
+        {
+          "type": "contains",
+          "value": "## 📊 Figures Clés",
+          "description": "Le rapport doit contenir une section figures"
+        },
+        {
+          "type": "regex",
+          "value": "!\\[Figure \\d+\\]\\(\\./figures/figure_.*\\.png\\)",
+          "description": "Les figures doivent être référencées en Markdown"
+        }
+      ]
+    },
+    {
+      "id": "test_03_mindmap_generation",
+      "prompt": "Crée une mindmap conceptuelle de synthèse pour ce document scientifique",
+      "description": "Test de génération de mindmap uniquement",
+      "expected_outputs": [
+        "Mindmap Mermaid avec structure hiérarchique",
+        "Nœud central = objectif de l'étude",
+        "Branches : Méthodologie, Résultats, Conclusions"
+      ],
+      "assertions": [
+        {
+          "type": "contains",
+          "value": "```mermaid\nmindmap",
+          "description": "Doit générer une mindmap Mermaid"
+        },
+        {
+          "type": "contains",
+          "value": "root((",
+          "description": "Doit contenir un nœud racine"
+        },
+        {
+          "type": "regex",
+          "value": "(Méthodologie|Résultats|Conclusions)",
+          "description": "Doit contenir au moins une branche principale"
+        }
+      ]
+    },
+    {
+      "id": "test_04_multi_format_docx",
+      "prompt": "Analyse ce document Word et résume les conclusions principales",
+      "description": "Test d'analyse d'un fichier DOCX",
+      "expected_outputs": [
+        "Analyse complète du DOCX",
+        "Résumé exécutif",
+        "Conclusions extraites"
+      ],
+      "assertions": [
+        {
+          "type": "contains",
+          "value": "## 💡 Conclusions Principales",
+          "description": "Le rapport doit contenir les conclusions"
+        },
+        {
+          "type": "file_exists",
+          "value": "analyse_document.md",
+          "description": "Le fichier d'analyse doit être créé"
+        }
+      ]
+    },
+    {
+      "id": "test_05_xlsx_data_extraction",
+      "prompt": "Analyse ce fichier Excel avec les résultats expérimentaux et extrais les valeurs clés",
+      "description": "Test d'extraction de données XLSX",
+      "expected_outputs": [
+        "Tableaux de données formatés en Markdown",
+        "Résultats numériques identifiés",
+        "Synthèse des tendances"
+      ],
+      "assertions": [
+        {
+          "type": "contains",
+          "value": "|",
+          "description": "Doit contenir des tableaux Markdown"
+        },
+        {
+          "type": "regex",
+          "value": "\\d+\\.\\d+",
+          "description": "Doit contenir des valeurs numériques"
+        }
+      ]
+    },
+    {
+      "id": "test_06_pptx_presentation",
+      "prompt": "Résume cette présentation PowerPoint et extrais les slides de résultats",
+      "description": "Test d'analyse de présentation PPTX",
+      "expected_outputs": [
+        "Résumé par slides",
+        "Extraction des graphiques de résultats",
+        "Structure narrative de la présentation"
+      ],
+      "assertions": [
+        {
+          "type": "contains",
+          "value": "## 📋 Résumé Exécutif",
+          "description": "Doit produire un résumé"
+        },
+        {
+          "type": "directory_exists",
+          "value": "figures",
+          "description": "Doit extraire les figures"
+        }
+      ]
+    },
+    {
+      "id": "test_07_marine_microbiology_context",
+      "prompt": "Analyse cet article de métabarcoding sur les archaea des grands fonds et extrais les résultats de diversité",
+      "description": "Test avec contexte microbiologie marine de Marc",
+      "expected_outputs": [
+        "Reconnaissance terminologie (16S rRNA, ASV, OTU, PERMANOVA)",
+        "Extraction métriques de diversité alpha/beta",
+        "Identification conditions expérimentales (pression, profondeur)"
+      ],
+      "assertions": [
+        {
+          "type": "regex",
+          "value": "(16S|ASV|OTU|PERMANOVA|diversité|alpha|beta)",
+          "description": "Doit reconnaître la terminologie métabarcoding"
+        },
+        {
+          "type": "contains",
+          "value": "## 🔬 Résultats Majeurs",
+          "description": "Doit extraire les résultats"
+        }
+      ]
+    },
+    {
+      "id": "test_08_french_output",
+      "prompt": "Fais-moi une synthèse complète de cet article scientifique",
+      "description": "Test de sortie en français (langue de Marc)",
+      "expected_outputs": [
+        "Rapport entièrement en français",
+        "Termes techniques conservés en anglais",
+        "Formatage Markdown correct"
+      ],
+      "assertions": [
+        {
+          "type": "regex",
+          "value": "(Résumé|Méthodologie|Résultats|Conclusions)",
+          "description": "Les sections doivent être en français"
+        },
+        {
+          "type": "contains",
+          "value": "📋",
+          "description": "Doit utiliser des emojis pour structure visuelle"
+        }
+      ]
+    },
+    {
+      "id": "test_09_statistical_data_extraction",
+      "prompt": "Extrais toutes les valeurs statistiques significatives de cet article (p-values, corrélations, etc.)",
+      "description": "Test d'extraction de données statistiques",
+      "expected_outputs": [
+        "Liste des p-values",
+        "Coefficients de corrélation",
+        "Intervalles de confiance",
+        "Pourcentages et ratios"
+      ],
+      "assertions": [
+        {
+          "type": "regex",
+          "value": "p\\s*[<>=]\\s*0\\.\\d+",
+          "description": "Doit extraire les p-values"
+        },
+        {
+          "type": "regex",
+          "value": "r\\s*=\\s*0\\.\\d+",
+          "description": "Doit extraire les corrélations"
+        },
+        {
+          "type": "regex",
+          "value": "\\d+\\.?\\d*\\s*%",
+          "description": "Doit extraire les pourcentages"
+        }
+      ]
+    },
+    {
+      "id": "test_10_complete_workflow",
+      "prompt": "Analyse complète de ce document : résumé, figures, conclusions, et mindmap de synthèse",
+      "description": "Test du workflow complet end-to-end",
+      "expected_outputs": [
+        "Fichier analyse_document.md avec toutes les sections",
+        "Dossier figures/ avec images extraites",
+        "Mindmap Mermaid incluse",
+        "Métadonnées du document"
+      ],
+      "assertions": [
+        {
+          "type": "file_exists",
+          "value": "analyse_document.md",
+          "description": "Le rapport complet doit exister"
+        },
+        {
+          "type": "directory_exists",
+          "value": "figures",
+          "description": "Le dossier figures doit exister"
+        },
+        {
+          "type": "contains",
+          "value": "## 📋 Résumé Exécutif",
+          "description": "Section résumé présente"
+        },
+        {
+          "type": "contains",
+          "value": "## 🔬 Résultats Majeurs",
+          "description": "Section résultats présente"
+        },
+        {
+          "type": "contains",
+          "value": "## 💡 Conclusions Principales",
+          "description": "Section conclusions présente"
+        },
+        {
+          "type": "contains",
+          "value": "## 📊 Figures Clés",
+          "description": "Section figures présente"
+        },
+        {
+          "type": "contains",
+          "value": "## 🗺️ Mindmap Conceptuelle",
+          "description": "Section mindmap présente"
+        },
+        {
+          "type": "contains",
+          "value": "```mermaid\nmindmap",
+          "description": "Mindmap Mermaid présente"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "skill_name": "doc-analyzer",
+    "version": "1.0",
+    "author": "Marc Garel",
+    "created": "2024-04-22",
+    "description": "Cas de test pour le skill d'analyse de documents scientifiques",
+    "total_tests": 10
+  }
+}
